@@ -1,6 +1,10 @@
 import type { Pokemon } from "../types/pokemon";
 
-const PokemonCard = ({ pokemon }: { pokemon: Pokemon }) => {
+interface Props {
+  pokemon: Pokemon;
+}
+
+const PokemonCard = ({ pokemon }: Props) => {
   return (
     <div className="border rounded p-4 shadow-md text-center">
       <h2 className="text-xl font-bold capitalize">{pokemon.name}</h2>
