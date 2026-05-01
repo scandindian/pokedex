@@ -1,26 +1,28 @@
 // src/api/pokemonApi.ts
-import type { Pokemon } from '../types/pokemon'
+import type { Pokemon, PokemonMove, PokemonType } from "../types/pokemon";
 
-const BASE_URL = 'https://pokeapi.co/api/v2/pokemon'
+const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 
-export const fetchPokemon = async (nameOrId: string | number): Promise<Pokemon> => {
-  const res = await fetch(`${BASE_URL}/${nameOrId}`)
-  
+export const fetchPokemon = async (
+  nameOrId: string | number,
+): Promise<Pokemon> => {
+  const res = await fetch(`${BASE_URL}/${nameOrId}`);
+
   if (!res.ok) {
-    throw new Error('Pokemon not found')
+    throw new Error("Pokemon not found");
   }
 
-  const data = await res.json()
+  const data = await res.json();
 
   return {
     name: data.name,
     image: data.sprites.front_default,
-    types: data.types.map((t: any) => t.type.name),
-    moves: data.moves.slice(0, 5).map((m: any) => m.move.name),
-  }
-}
+    types: data.types.map((t: PokemonType) => t.type.name),
+    moves: data.moves.slice(0, 5).map((m: PokemonMove) => m.move.name),
+  };
+};
 
 export const fetchRandomPokemon = async (): Promise<Pokemon> => {
-  const randomId = Math.floor(Math.random() * 151) + 1
-  return fetchPokemon(randomId)
-}
+  const randomId = Math.floor(Math.random() * 151) + 1;
+  return fetchPokemon(randomId);
+};
