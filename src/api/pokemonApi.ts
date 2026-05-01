@@ -1,4 +1,3 @@
-// src/api/pokemonApi.ts
 import type { Pokemon, PokemonMove, PokemonType } from "../types/pokemon";
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
@@ -18,7 +17,7 @@ export const fetchPokemon = async (
     name: data.name,
     image: data.sprites.front_default,
     types: data.types.map((t: PokemonType) => t.type.name),
-    moves: data.moves.slice(0, 5).map((m: PokemonMove) => m.move.name),
+    moves: data.moves.map((m: PokemonMove) => m.move.name),
   };
 };
 

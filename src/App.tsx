@@ -6,7 +6,7 @@ const App = () => {
 
   useEffect(() => {
     getRandomPokemon();
-  }, []);
+  }, [getRandomPokemon]);
 
   return <div>{JSON.stringify(pokemon)}</div>;
 };

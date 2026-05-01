@@ -1,4 +1,3 @@
-// src/hooks/usePokemon.ts
 import { useState } from "react";
 import { fetchPokemon, fetchRandomPokemon } from "../api/pokemonApi";
 import type { Pokemon } from "../types/pokemon";
@@ -15,7 +14,7 @@ export const usePokemon = () => {
       const data = await fetchPokemon(query.toLowerCase());
       setPokemon(data);
     } catch (err) {
-      setError("Pokemon not found");
+      setError(`Pokemon not found: ${err}`);
     } finally {
       setLoading(false);
     }
@@ -28,7 +27,7 @@ export const usePokemon = () => {
       const data = await fetchRandomPokemon();
       setPokemon(data);
     } catch (err) {
-      setError("Failed to fetch pokemon");
+      setError(`Failed to fetch pokemon: ${err}`);
     } finally {
       setLoading(false);
     }
