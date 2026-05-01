@@ -8,7 +8,9 @@ interface Props {
 
 const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
   const [value, setValue] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const trimmedValue = value.trim().toLowerCase();
+  const hasExactMatch = pokemonNames.includes(trimmedValue);
   const matchedPokemon = trimmedValue
     ? pokemonNames.filter((name) => name.includes(trimmedValue))
     : [];
@@ -16,11 +18,13 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!trimmedValue) return;
+    setIsDropdownOpen(false);
     onSearch(trimmedValue);
   };
 
   const handleSuggestionClick = (name: string) => {
     setValue(name);
+    setIsDropdownOpen(false);
     onSearch(name);
   };
 
@@ -29,12 +33,22 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
       <div className="relative w-full">
         <input
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            const nextValue = e.target.value;
+            const nextTrimmedValue = nextValue.trim().toLowerCase();
+
+            setValue(nextValue);
+            setIsDropdownOpen(
+              Boolean(nextTrimmedValue) &&
+                !pokemonNames.includes(nextTrimmedValue),
+            );
+          }}
+          onFocus={() => setIsDropdownOpen(Boolean(trimmedValue) && !hasExactMatch)}
           placeholder="Search Pokémon..."
           className="w-full rounded border p-2"
         />
 
-        {trimmedValue && (
+        {isDropdownOpen && (
           <div className="absolute left-0 right-0 top-full z-10 mt-1 max-h-64 overflow-y-auto rounded border bg-white text-left shadow-lg">
             {loadingNames && (
               <div className="px-3 py-2 text-sm text-gray-500">Loading...</div>
