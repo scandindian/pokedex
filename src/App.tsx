@@ -4,8 +4,16 @@ import PokemonCard from "./components/PokemonCard";
 import { usePokemon } from "./hooks/usePokemon";
 
 function App() {
-  const { pokemon, loading, error, searchPokemon, getRandomPokemon } =
-    usePokemon();
+  const {
+    pokemon,
+    pokemonNames,
+    loading,
+    listLoading,
+    error,
+    searchPokemon,
+    getRandomPokemon,
+    loadPokemonNames,
+  } = usePokemon();
   const hasFetched = useRef(false);
 
   useEffect(() => {
@@ -13,13 +21,18 @@ function App() {
     hasFetched.current = true;
 
     getRandomPokemon();
-  }, [getRandomPokemon]);
+    loadPokemonNames();
+  }, [getRandomPokemon, loadPokemonNames]);
 
   return (
     <div className="max-w-xl mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold text-center">Pokédex</h1>
 
-      <SearchBar onSearch={searchPokemon} />
+      <SearchBar
+        onSearch={searchPokemon}
+        pokemonNames={pokemonNames}
+        loadingNames={listLoading}
+      />
 
       <button
         onClick={getRandomPokemon}

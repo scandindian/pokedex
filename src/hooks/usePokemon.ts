@@ -1,11 +1,29 @@
 import { useState, useCallback } from "react";
-import { fetchPokemon, fetchRandomPokemon } from "../api/pokemonApi";
+import {
+  fetchPokemon,
+  fetchPokemonNames,
+  fetchRandomPokemon,
+} from "../api/pokemonApi";
 import type { Pokemon } from "../types/pokemon";
 
 export const usePokemon = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+  const [pokemonNames, setPokemonNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [listLoading, setListLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const loadPokemonNames = useCallback(async () => {
+    try {
+      setListLoading(true);
+      const names = await fetchPokemonNames();
+      setPokemonNames(names);
+    } catch (err) {
+      setError(`Failed to fetch pokemon list: ${err}`);
+    } finally {
+      setListLoading(false);
+    }
+  }, []);
 
   const searchPokemon = useCallback(async (query: string) => {
     try {
@@ -35,9 +53,12 @@ export const usePokemon = () => {
 
   return {
     pokemon,
+    pokemonNames,
     loading,
+    listLoading,
     error,
     searchPokemon,
     getRandomPokemon,
+    loadPokemonNames,
   };
 };

@@ -5,6 +5,11 @@ export interface Pokemon {
   moves: string[];
 }
 
+export interface PokemonListItem {
+  name: string;
+  url: string;
+}
+
 export interface PokemonType {
   slot: number;
   type: PokemonTypeRoot;
