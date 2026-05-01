@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { usePokemon } from "./hooks/usePokemon";
+import PokemonCard from "./components/PokemonCard";
 
 const App = () => {
   const { pokemon, getRandomPokemon } = usePokemon();
@@ -12,7 +13,11 @@ const App = () => {
     getRandomPokemon();
   }, [getRandomPokemon]);
 
-  return <div>{JSON.stringify(pokemon)}</div>;
+  return (
+    <div className="max-w-xl mx-auto p-4 space-y-4">
+      {pokemon && <PokemonCard pokemon={pokemon} />}
+    </div>
+  );
 };
 
 export default App;
