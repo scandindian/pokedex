@@ -9,8 +9,9 @@ const SearchBar = ({ onSearch }: Props) => {
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!value.trim()) return;
-    onSearch(value);
+    const trimmedValue = value.trim();
+    if (!trimmedValue) return;
+    onSearch(trimmedValue);
   };
 
   return (
