@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import PokemonCard from "./components/PokemonCard";
 import { usePokemon } from "./hooks/usePokemon";
@@ -14,12 +14,8 @@ function App() {
     getRandomPokemon,
     loadPokemonNames,
   } = usePokemon();
-  const hasFetched = useRef(false);
 
   useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-
     getRandomPokemon();
     loadPokemonNames();
   }, [getRandomPokemon, loadPokemonNames]);

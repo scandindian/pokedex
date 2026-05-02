@@ -1,8 +1,13 @@
 export interface Pokemon {
   name: string;
   image: string;
-  types: string[];
+  types: PokemonTypeDetail[];
   moves: string[];
+}
+
+export interface PokemonTypeDetail {
+  name: string;
+  icon: string | null;
 }
 
 export interface PokemonListItem {

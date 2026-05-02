@@ -6,6 +6,32 @@ import type {
 } from "../types/pokemon";
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
+const LOCAL_TYPE_ICONS = new Set([
+  "normal",
+  "fighting",
+  "flying",
+  "poison",
+  "ground",
+  "rock",
+  "bug",
+  "ghost",
+  "steel",
+  "fire",
+  "water",
+  "grass",
+  "electric",
+  "psychic",
+  "ice",
+  "dragon",
+  "dark",
+  "fairy",
+]);
+
+const getTypeIconPath = (name: string): string | null => {
+  if (!LOCAL_TYPE_ICONS.has(name)) return null;
+
+  return `/type-icons/${name}.png`;
+};
 
 export const fetchPokemon = async (
   nameOrId: string | number,
@@ -17,11 +43,15 @@ export const fetchPokemon = async (
   }
 
   const data = await res.json();
+  const types = data.types.map((t: PokemonType) => ({
+    name: t.type.name,
+    icon: getTypeIconPath(t.type.name),
+  }));
 
   return {
     name: data.name,
     image: data.sprites.front_default,
-    types: data.types.map((t: PokemonType) => t.type.name),
+    types,
     moves: data.moves.slice(0, 5).map((m: PokemonMove) => m.move.name),
   };
 };
