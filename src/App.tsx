@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import PokemonCard from "./components/PokemonCard";
+import Loader from "./components/Loader";
 import { usePokemon } from "./hooks/usePokemon";
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
         Random Pokémon
       </button>
 
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       {error && <p className="text-red-500">{error}</p>}
       {pokemon && <PokemonCard pokemon={pokemon} />}
     </div>
