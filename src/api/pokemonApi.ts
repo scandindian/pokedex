@@ -51,7 +51,9 @@ export const fetchPokemon = async (
   return {
     id: data.id,
     name: data.name,
-    image: data.sprites.front_default,
+    image:
+      data.sprites.other["official-artwork"].front_default ??
+      data.sprites.front_default,
     types,
     moves: data.moves.slice(0, 5).map((m: PokemonMove) => m.move.name),
   };

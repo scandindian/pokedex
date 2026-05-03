@@ -9,13 +9,15 @@ const PokemonCard = ({ pokemon }: Props) => {
 
   return (
     <div className="flex flex-col gap-4 rounded border p-4 shadow-md sm:flex-row sm:items-center">
-      <div className="rounded border bg-gray-50 p-4 text-center sm:w-48">
+      <div className="rounded border bg-gray-50 p-4 text-center sm:w-64">
         <img
           src={pokemon.image}
           alt={pokemon.name}
-          className="mx-auto h-40 w-40"
+          className="mx-auto h-32 w-32 sm:h-56 sm:w-56"
         />
-        <h2 className="mt-2 text-xl font-bold capitalize">{pokemon.name} #{pokemon.id}</h2>
+        <h2 className="mt-2 text-xl font-bold capitalize">
+          {pokemon.name} #{pokemon.id}
+        </h2>
       </div>
 
       <div className="flex-1 space-y-3 capitalize">
