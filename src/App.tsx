@@ -23,7 +23,7 @@ function App() {
   }, [getRandomPokemon, loadPokemonNames]);
 
   return (
-    <div className="max-w-xl mx-auto p-4 space-y-4">
+    <div className="max-w-3xl mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold text-center">Pokédex</h1>
 
       <SearchBar

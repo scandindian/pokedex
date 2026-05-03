@@ -5,8 +5,6 @@ interface Props {
 }
 
 const PokemonCard = ({ pokemon }: Props) => {
-  const displayedMoves = pokemon.moves.slice(0, 5);
-
   return (
     <div className="flex flex-col gap-4 rounded border p-4 shadow-md sm:flex-row sm:items-center">
       <div className="rounded border bg-gray-50 p-4 text-center sm:w-64">
@@ -49,7 +47,7 @@ const PokemonCard = ({ pokemon }: Props) => {
         </div>
 
         <div>
-          <strong>Moves:</strong> {displayedMoves.join(", ")}
+          <strong>Moves:</strong> {pokemon.moves.join(", ")}
         </div>
       </div>
     </div>
