@@ -11,6 +11,7 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [value, setValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const trimmedValue = value.trim().toLowerCase();
   const hasExactMatch = pokemonNames.includes(trimmedValue);
   const matchedPokemon = trimmedValue
@@ -21,24 +22,28 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
     e.preventDefault();
     if (!trimmedValue) return;
     setIsDropdownOpen(false);
+    setHighlightedIndex(-1);
     onSearch(trimmedValue);
   };
 
   const handleSuggestionClick = (name: string) => {
     setValue(name);
     setIsDropdownOpen(false);
+    setHighlightedIndex(-1);
     onSearch(name);
   };
 
   const handleClear = () => {
     setValue("");
     setIsDropdownOpen(false);
+    setHighlightedIndex(-1);
   };
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (!formRef.current?.contains(e.target as Node)) {
         setIsDropdownOpen(false);
+        setHighlightedIndex(-1);
       }
     };
 
@@ -59,6 +64,7 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
             const nextTrimmedValue = nextValue.trim().toLowerCase();
 
             setValue(nextValue);
+            setHighlightedIndex(-1);
             setIsDropdownOpen(
               Boolean(nextTrimmedValue) &&
                 !pokemonNames.includes(nextTrimmedValue),
@@ -68,8 +74,33 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
             setIsDropdownOpen(Boolean(trimmedValue) && !hasExactMatch)
           }
           onKeyDown={(e) => {
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setIsDropdownOpen(Boolean(trimmedValue) && !hasExactMatch);
+              setHighlightedIndex((currentIndex) =>
+                Math.min(currentIndex + 1, matchedPokemon.length - 1),
+              );
+            }
+
+            if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setHighlightedIndex((currentIndex) =>
+                Math.max(currentIndex - 1, 0),
+              );
+            }
+
+            if (
+              e.key === "Enter" &&
+              isDropdownOpen &&
+              highlightedIndex >= 0
+            ) {
+              e.preventDefault();
+              handleSuggestionClick(matchedPokemon[highlightedIndex]);
+            }
+
             if (e.key === "Escape") {
               setIsDropdownOpen(false);
+              setHighlightedIndex(-1);
             }
           }}
           placeholder="Search Pokémon..."
@@ -100,12 +131,14 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
             )}
 
             {!loadingNames &&
-              matchedPokemon.map((name) => (
+              matchedPokemon.map((name, index) => (
                 <button
                   key={name}
                   type="button"
                   onClick={() => handleSuggestionClick(name)}
-                  className="block w-full truncate px-3 py-2 text-left capitalize hover:bg-gray-100"
+                  className={`block w-full truncate px-3 py-2 text-left capitalize hover:bg-gray-100 ${
+                    index === highlightedIndex ? "bg-blue-50" : ""
+                  }`}
                 >
                   {name}
                 </button>
