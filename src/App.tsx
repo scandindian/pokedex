@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Shuffle } from "lucide-react";
 import SearchBar from "./components/SearchBar";
 import PokemonCard from "./components/PokemonCard";
 import Loader from "./components/Loader";
@@ -31,12 +32,15 @@ function App() {
         loadingNames={listLoading}
       />
 
-      <button
-        onClick={getRandomPokemon}
-        className="bg-green-500 text-white px-4 py-2 rounded"
-      >
-        Random Pokémon
-      </button>
+      <div className="flex justify-end">
+        <button
+          onClick={getRandomPokemon}
+          className="inline-flex items-center gap-2 rounded bg-green-500 px-4 py-2 text-white"
+        >
+          <Shuffle className="h-4 w-4" aria-hidden="true" />
+          Random Pokémon
+        </button>
+      </div>
 
       {loading && <Loader />}
       {error && <p className="text-red-500">{error}</p>}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Search } from "lucide-react";
 
 interface Props {
   onSearch: (query: string) => void;
@@ -43,7 +44,9 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
                 !pokemonNames.includes(nextTrimmedValue),
             );
           }}
-          onFocus={() => setIsDropdownOpen(Boolean(trimmedValue) && !hasExactMatch)}
+          onFocus={() =>
+            setIsDropdownOpen(Boolean(trimmedValue) && !hasExactMatch)
+          }
           placeholder="Search Pokémon..."
           className="w-full rounded border p-2"
         />
@@ -74,7 +77,10 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
           </div>
         )}
       </div>
-      <button className="rounded bg-blue-500 px-4 text-white">Search</button>
+      <button className="inline-flex items-center gap-2 rounded bg-blue-500 px-4 text-white">
+        <Search className="h-4 w-4" aria-hidden="true" />
+        Search
+      </button>
     </form>
   );
 };

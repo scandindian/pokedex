@@ -15,7 +15,7 @@ const PokemonCard = ({ pokemon }: Props) => {
           alt={pokemon.name}
           className="mx-auto h-40 w-40"
         />
-        <h2 className="mt-2 text-xl font-bold capitalize">{pokemon.name}</h2>
+        <h2 className="mt-2 text-xl font-bold capitalize">{pokemon.name} #{pokemon.id}</h2>
       </div>
 
       <div className="flex-1 space-y-3 capitalize">
