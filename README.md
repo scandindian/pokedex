@@ -12,6 +12,9 @@ A responsive Pokédex built with React, TypeScript, Vite, Tailwind CSS, and the 
 
 ![Mobile Pokédex screenshot](docs/screenshots/mobile.png)
 
+## Deployment
+Deployment using Netlify. Find the application ![here](https://pistachio-pokedex.netlify.app/)
+
 ## Features
 
 - Search Pokémon by name using data from the PokeAPI Pokémon list endpoint.
