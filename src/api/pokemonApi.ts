@@ -4,28 +4,8 @@ import type {
   PokemonMove,
   PokemonType,
 } from "../types/pokemon";
-
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
-const LOCAL_TYPE_ICONS = new Set([
-  "normal",
-  "fighting",
-  "flying",
-  "poison",
-  "ground",
-  "rock",
-  "bug",
-  "ghost",
-  "steel",
-  "fire",
-  "water",
-  "grass",
-  "electric",
-  "psychic",
-  "ice",
-  "dragon",
-  "dark",
-  "fairy",
-]);
+import { LOCAL_TYPE_ICONS } from "../utilities/icons";
+import { BASE_URL } from "../utilities/urls";
 
 const getTypeIconPath = (name: string): string | null => {
   if (!LOCAL_TYPE_ICONS.has(name)) return null;
@@ -33,6 +13,7 @@ const getTypeIconPath = (name: string): string | null => {
   return `/type-icons/${name}.png`;
 };
 
+// Fetch Pokemon from the name or could also be ID
 export const fetchPokemon = async (
   nameOrId: string | number,
 ): Promise<Pokemon> => {
@@ -59,6 +40,7 @@ export const fetchPokemon = async (
   };
 };
 
+// Fetch random pokemon
 export const fetchRandomPokemon = async (): Promise<Pokemon> => {
   const randomId = Math.floor(Math.random() * 151) + 1;
   return fetchPokemon(randomId);

@@ -17,6 +17,7 @@ function App() {
     loadPokemonNames,
   } = usePokemon();
 
+  // Get random pokemon when page is loaded and also the list of pokemons
   useEffect(() => {
     getRandomPokemon();
     loadPokemonNames();

@@ -18,6 +18,7 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
     ? pokemonNames.filter((name) => name.includes(trimmedValue))
     : [];
 
+  // Get pokemon details on submit
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!trimmedValue) return;
@@ -26,6 +27,7 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
     onSearch(trimmedValue);
   };
 
+  // When option is clicked make API call instead of making calls for each character change in search bar
   const handleSuggestionClick = (name: string) => {
     setValue(name);
     setIsDropdownOpen(false);
@@ -33,12 +35,14 @@ const SearchBar = ({ onSearch, pokemonNames, loadingNames }: Props) => {
     onSearch(name);
   };
 
+  // Clear the search bar
   const handleClear = () => {
     setValue("");
     setIsDropdownOpen(false);
     setHighlightedIndex(-1);
   };
 
+  // Handle click outside of search list to close the dropdown option
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (!formRef.current?.contains(e.target as Node)) {

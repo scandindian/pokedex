@@ -13,6 +13,7 @@ export const usePokemon = () => {
   const [listLoading, setListLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Load pokemon names, to be used in search option for search bar
   const loadPokemonNames = useCallback(async () => {
     try {
       setListLoading(true);
@@ -25,6 +26,7 @@ export const usePokemon = () => {
     }
   }, []);
 
+  // Search pokemon with the given name
   const searchPokemon = useCallback(async (query: string) => {
     try {
       setLoading(true);
@@ -38,6 +40,7 @@ export const usePokemon = () => {
     }
   }, []);
 
+  // Get random pokemon when the button is clicked and page is loaded
   const getRandomPokemon = useCallback(async () => {
     try {
       setLoading(true);
